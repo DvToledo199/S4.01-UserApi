@@ -19,6 +19,7 @@ public class UserController {
         if (name == null) {
             return users;
         }
+
         return users.stream()
                 .filter(user -> user.getName().toLowerCase().contains(name.toLowerCase()))
                 .toList();
@@ -36,7 +37,7 @@ public class UserController {
         return users.stream()
                 .filter(user -> user.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new UserNotFoundException());
+                .orElseThrow(()->new UserNotFoundException());
     }
 
 
