@@ -14,8 +14,14 @@ public class UserController {
     private List<User> users = new ArrayList<>();
 
     @GetMapping("/users")
-    public List<User> getUsers() {
-        return users;
+    public List<User> getUsers(@RequestParam(required = false) String name) {
+
+        if (name == null) {
+            return users;
+        }
+        return users.stream()
+                .filter(user -> user.getName().toLowerCase().contains(name.toLowerCase()))
+                .toList();
     }
 
     @PostMapping("/users")
@@ -30,7 +36,7 @@ public class UserController {
         return users.stream()
                 .filter(user -> user.getId().equals(id))
                 .findFirst()
-                .orElseThrow(()->new UserNotFoundException());
+                .orElseThrow(() -> new UserNotFoundException());
     }
 
 
