@@ -1,4 +1,4 @@
-package cat.itacademy.s04.t01.userapi;
+package cat.itacademy.s04.t01.userapi.controllers;
 
 import cat.itacademy.s04.t01.userapi.models.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
