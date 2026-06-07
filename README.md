@@ -44,10 +44,62 @@ The application was successfully packaged and executed as a standalone JAR file.
 
 ![JAR Execution](screenshots/jar-execution.png)
 
-## Level 2
+## Level 2 - User Management API
 
-To be implemented in the next stage of the assignment.
+### Description
 
-## Author
+This level extends the API with basic user management functionality using an in-memory list as temporary storage.
 
-David Toledo
+### User Model
+
+Each user contains:
+
+- id (UUID)
+- name (String)
+- email (String)
+
+### Implemented Endpoints
+
+#### GET /users
+
+Returns all users stored in memory.
+
+#### POST /users
+
+Creates a new user.
+
+Request example:
+
+```json
+{
+  "name": "John Doe",
+  "email": "john@example.com"
+}
+```
+
+The API automatically generates a UUID for the new user.
+
+#### GET /users/{id}
+
+Returns a specific user by UUID.
+
+Response:
+
+- 200 OK when the user exists.
+- 404 Not Found when the user does not exist.
+
+#### GET /users?name=value
+
+Filters users by name.
+
+The search is case-insensitive and returns all users whose name contains the provided text.
+
+### Testing
+
+Automated tests were implemented using MockMvc and JUnit 5 to verify:
+
+- Retrieval of an empty user list.
+- User creation with automatic UUID generation.
+- Retrieval of a user by ID.
+- 404 response for non-existing users.
+- User filtering by name.
