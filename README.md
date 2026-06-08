@@ -103,3 +103,81 @@ Automated tests were implemented using MockMvc and JUnit 5 to verify:
 - Retrieval of a user by ID.
 - 404 response for non-existing users.
 - User filtering by name.
+
+## Level 3 - Layered Architecture
+
+### Description
+
+The application was refactored following a layered architecture to separate responsibilities and improve maintainability.
+
+The architecture is divided into three layers:
+
+- Controller: Handles HTTP requests and responses.
+- Service: Contains business logic and application rules.
+- Repository: Manages data access.
+
+### Repository Layer
+
+A repository abstraction was introduced through the `UserRepository` interface.
+
+An in-memory implementation called `InMemoryUserRepository` was created to manage users using an internal list.
+
+Implemented repository operations:
+
+- save(User user)
+- findAll()
+- findById(UUID id)
+- searchByName(String name)
+- existsByEmail(String email)
+
+### Service Layer
+
+A service abstraction was introduced through the `UserService` interface and implemented in `UserServiceImpl`.
+
+The service layer is responsible for:
+
+- Creating users.
+- Retrieving users.
+- Searching users by name.
+- Retrieving users by ID.
+- Applying business rules.
+
+### Business Rule: Unique Email Validation
+
+A validation was added to prevent duplicate email addresses.
+
+When creating a user:
+
+- If the email already exists, an `EmailAlreadyExistsException` is thrown.
+- Otherwise, a UUID is generated and the user is stored.
+
+### Dependency Injection
+
+Spring dependency injection was implemented using constructor injection.
+
+Annotations used:
+
+- `@Repository`
+- `@Service`
+
+### Testing
+
+The project includes:
+
+- Integration tests using `@SpringBootTest` and `@AutoConfigureMockMvc`.
+- Unit tests for `InMemoryUserRepository`.
+- Unit tests for `UserServiceImpl` using Mockito.
+
+Mockito was used with:
+
+- `@Mock`
+- `@InjectMocks`
+
+Test coverage includes:
+
+- Duplicate email validation.
+- Successful user creation.
+- User search by ID.
+- User search by name.
+- Email existence verification.
+- User persistence operations.

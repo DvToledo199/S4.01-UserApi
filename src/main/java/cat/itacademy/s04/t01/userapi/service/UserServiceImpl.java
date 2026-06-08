@@ -3,6 +3,7 @@ package cat.itacademy.s04.t01.userapi.service;
 import cat.itacademy.s04.t01.userapi.exceptions.UserNotFoundException;
 import cat.itacademy.s04.t01.userapi.models.User;
 import cat.itacademy.s04.t01.userapi.repository.UserRepository;
+import cat.itacademy.s04.t01.userapi.exceptions.EmailAlreadyExistsException;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
@@ -18,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user) {
+        if (userRepository.existsByEmail(user.getEmail())) {
+            throw new EmailAlreadyExistsException();
+        }
         user.setId(UUID.randomUUID());
         return userRepository.save(user);
     }
